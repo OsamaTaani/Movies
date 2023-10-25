@@ -47,6 +47,14 @@
     </style>
 </head>
 <body>
+    <!-- for filtiring -->
+
+    <select id="movies" onchange="filtering()">
+        <option value="home">home</option>
+        <option value="Rating">rating</option>
+        <option value="Catalog">catalog</option>
+       
+    </select>
     <h1>movies</h1>
     <ul class="movie-list">
         <% movie.map((x) => { %>
@@ -61,7 +69,21 @@
             </li>
         <% }) %>
     </ul>
-    
+    <script>
+        
+        //for filtiring
+
+        function filtering(){
+            var selectFilter = document.getElementById("movies").value;
+
+            if (selectFilter == "Rating") {
+                window.location.href = "/Rating";
+            }
+            if(selectFilter == "Catalog") {
+                window.location.href = "/Catalog";
+            }
+        }
+    </script>
 <!-- <% console.log(movie) %> -->
 </body>
 </html>

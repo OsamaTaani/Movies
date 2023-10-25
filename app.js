@@ -1,5 +1,6 @@
 const http = require('https');
 const express = require('express');
+const { request } = require('http');
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -29,15 +30,32 @@ app.get("/tvShows", (request , response) => {
       const body = Buffer.concat(chunks);
       console.log(body.toString());
       let data = JSON.parse(body);
+     //for filtiring
+      filterRating = data.filter((movie) => movie.rating <= 9.0);
+      filterCatalog = data.filter((movie) => movie.genre == "Drama");
+
       response.render('index.ejs',{movie:data})
     });
   });
   
   req.end();
 
-})
+});
+
 
 
 app.listen(port , () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
+
+//for filtiring
+
+let filterRating = [];
+let filterCatalog = [];
+app.get("/Rating",(request , response) => {
+  response.render("index.ejs" , {movie:filterRating});
+});
+app.get("/Catalog" , (request , response) => {
+  response.render("index.ejs" , {movie:filterCatalog});
+});
+
